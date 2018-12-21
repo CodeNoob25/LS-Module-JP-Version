@@ -8,7 +8,6 @@ var Listing = require('./resources/Listing.js');
 console.log(sampleData);
 
 var insertSample = function() {
-    console.log('YOYOYO');
     //console.log(Pokemon);
     //var poke = db.models.Pokemon;
     Listing.insertMany(sampleData)
