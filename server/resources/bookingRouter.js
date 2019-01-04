@@ -3,7 +3,7 @@ var bookingController = require('./bookingController');
 
 
 
-bookingRouter.route('/:id')
+bookingRouter.route('/api/booking/:id')
     .get(bookingController.retrieveBooking)
 
 module.exports = bookingRouter;

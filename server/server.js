@@ -9,11 +9,12 @@ var app = express();
 // Attach middleware:
 app.use(bodyParser.json());
 
-app.use('/api/booking', bookingRouter)
+app.use('/:id', express.static(__dirname + '/../client/dist'));
+
+app.use('/', bookingRouter)
 
 //connect to client
 
-app.use(express.static(__dirname + '/../client/dist'));
 
 
 app.get('/', function (req, res) {

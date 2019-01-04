@@ -1,6 +1,7 @@
 import 'react-dates/initialize';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import Axios from 'axios';
+import Moment from 'moment';
 
 import 'react-dates/lib/css/_datepicker.css';
 
@@ -18,32 +19,38 @@ class App extends (React.Component) {
       super(props);
       this.state = {
         bookingData: [],
-        date: [],
-        focused: []
+        days: 1
+
       }
-      //this.getData = this.getData.bind(this);
+      this.getData = this.getData.bind(this);
 
     }
 
-    // getData() {
-    //     return Axios.get('/:id')
-    //         .then((res) => {
-    //             this.setState({bookingData: res.data})
-    //             console.log(res.data)
-    //         })
-    // }
+    getData() {
+        let id = document.location.pathname;
+        id = parseInt(id.match(/\d+/g));
+        return Axios.get(`/api/booking/${id}`)
+            .then((res) => {
+                
+                this.setState({bookingData: res.data})
+                //console.log(res.data)
+            })
+            .catch(err => console.error('error on this ID', err))
+    }
 
-    // componentDidMount() {
-    //     console.log('did mount')
-    //     this.getData()
+    componentDidMount() {
+        console.log('did mount')
+        this.getData()
         
-
-    // }
+    }
 
     render() {
-      return (
-<div className = "app">
-<header className = "Nav">Gotta catch em all!</header>
+        if (this.state.bookingData.length > 0) {
+            return (
+  <div className = "app">
+    <header className = "Nav">${this.state.bookingData[0].availability[0].price} per night
+    <div>***** {this.state.bookingData[0].numReviews}</div>
+    </header>
    <DateRangePicker
   startDate={this.state.startDate} // momentPropTypes.momentObj or null,
   startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
@@ -53,11 +60,47 @@ class App extends (React.Component) {
   focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
   onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
 />
+<br></br>
+<div>
+<table>
+<tr>
+        <td> { (this.state.days)} day(s) at ${this.state.bookingData[0].availability[0].price} per night</td>
+        <td>${this.state.bookingData[0].availability[0].price * this.state.days}</td>
+    </tr>
+    <tr>
+        <td>Cleaning Fee</td>
+        <td>${this.state.bookingData[0].cleaningFee}</td>
+    </tr>
+    <tr>
+        <td>Service Fee</td>
+        <td>${(this.state.bookingData[0].availability[0].price * 0.1).toFixed(0)}</td>
+    </tr>
+    <tr>
+        <td>Total</td>
+        <td>${(this.state.bookingData[0].availability[0].price * 1.1).toFixed(0)}</td>
+    </tr>
+</table>
+<button name="button">Request to Book</button>
+<div>You won't be charged yet</div>
 
 </div>
-      );
+
+</div>
+
+
+
+            )
+        } else {
+            return (
+                <div>*loading*</div>
+
+            )
+        }
     }
   }
+
+
+
   
   ReactDOM.render(<App />, document.getElementById('app'));
 
