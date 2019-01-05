@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server",
+    "startboth": "concurrently \"node ./server/index.js\" \"webpack -d --watch\"",
     "dev-react": "webpack -d --watch",
     "aws-connect": "chmod 400 lexifec.pem  && ssh -i \"lexifec.pem\" ubuntu@ec2-18-222-217-73.us-east-2.compute.amazonaws.com"
   },
@@ -24,6 +25,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
     "css-loader": "^2.1.0",
     "express": "^4.16.4",
     "moment": "^2.23.0",
