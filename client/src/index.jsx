@@ -14,7 +14,7 @@ import ReactDOM from 'react-dom';
 //export const pureComponentAvailable = true;
 
 
-class App extends (React.Component) {
+class BookingModule extends (React.Component) {
     constructor(props) {
       super(props);
       this.state = {
@@ -101,7 +101,8 @@ class App extends (React.Component) {
 
 
 
-  
-  ReactDOM.render(<App />, document.getElementById('app'));
+  //
+ // ReactDOM.render(<App />, document.getElementById('app'));
 
 
+ window.BookingModule = BookingModule;
