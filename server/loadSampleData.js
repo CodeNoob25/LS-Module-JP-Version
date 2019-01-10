@@ -15,5 +15,4 @@ var insertSample = function() {
         .catch(console.log('error'));
 }
 
-
 insertSample();
