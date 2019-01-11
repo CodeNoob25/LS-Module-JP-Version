@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
 
-
-
 var availabilitySchema = mongoose.Schema({
     id: Number,
     date: Date,
@@ -15,9 +13,9 @@ var listingSchema = mongoose.Schema({
     capacity: Number,
     cleaningFee: Number, 
     numReviews: Number,
-    availability: [availabilitySchema]
+    price: Number,
+    availability: String
 }, { _id: false });
-
 
 var Listing = mongoose.model('listing', listingSchema);
 var Availability = mongoose.model('availability', availabilitySchema);

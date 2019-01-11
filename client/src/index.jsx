@@ -8,6 +8,7 @@ import 'react-dates/lib/css/_datepicker.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import moment from 'moment';
 
 //import Component from 'react';
 //export default React.PureComponent;
@@ -19,8 +20,7 @@ class BookingModule extends (React.Component) {
       super(props);
       this.state = {
         bookingData: [],
-        days: 1
-
+        days: 1,
       }
       this.getData = this.getData.bind(this);
 
@@ -31,8 +31,13 @@ class BookingModule extends (React.Component) {
         id = parseInt(id.match(/\d+/g));
         return Axios.get(`/api/booking/${id}`)
             .then((res) => {
-                
-                this.setState({bookingData: res.data})
+                console.log(res.data)
+                var availability = [];
+                var reconverted = res.data[0].availability.split('-');
+                reconverted.forEach((date) => {
+                    availability.push(moment().dayOfYear(date));
+                })
+                this.setState({bookingData: res.data, blockedDates: availability})
                 //console.log(res.data)
             })
             .catch(err => console.error('error on this ID', err))
@@ -45,6 +50,7 @@ class BookingModule extends (React.Component) {
     }
 
     render() {
+        const isDayBlocked = day => this.state.blockedDates.filter((d) => d.isSame(day, 'day')).length > 0;
         if (this.state.bookingData.length > 0) {
             return (
   <div className = "app">
@@ -59,6 +65,7 @@ class BookingModule extends (React.Component) {
   onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
   focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
   onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+  isDayBlocked={isDayBlocked}
 />
 <br></br>
 <div>
