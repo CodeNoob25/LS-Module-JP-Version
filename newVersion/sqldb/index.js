@@ -1,17 +1,23 @@
-var pg = require('pg');
+var {Client, Pool} = require('pg');
 
-var connectionString = process.env.POSTGRES = 'postgres://userName:/localhost:4008/listings';
+const pgClient = new Client({
+    user: '',
+    host: 'localhost',
+    database: 'listings',
+    password: '',
+    port: 5432,
+  })
 
-var pgClient = new pg.Client(connectionString);
+// var connectionString = process.env.POSTGRES = 'postgres://userName:/password:/localhost:5432/listings';
 
 pgClient.connect();
 
-var insert = (params, callback) => {
+pgClient.insert = (params) => {
     var queryStr =
-      "INSERT INTO Listings(id, name, capacity, cleaningFee, numReviews, price, availability) VALUES($1, $2, $3, $4, $5, $6, $7)";
+      "INSERT INTO listingTable(id, name, capacity, cleaningFee, numReviews, price, availability, _id) VALUES($1, $2, $3, $4, $5, $6, $7, $8)";
       pgClient.query(queryStr, params)
       .then(res => {
-        console.log(res.rows[0])
+        
         // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
       })
       .catch(e => console.error(e.stack))

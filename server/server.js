@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var db = require('./db');
+var db = require('./db/index.js');
 var bookingRouter = require('./resources/bookingRouter.js');
 
 // Create the Express application:
@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 app.use('/:id', express.static(__dirname + '/../client/dist'));
 
-app.use('/', bookingRouter)
+app.use('/', bookingRouter);
 
 //connect to client
 

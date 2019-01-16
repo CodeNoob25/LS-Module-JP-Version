@@ -20,7 +20,8 @@ class BookingModule extends (React.Component) {
       super(props);
       this.state = {
         bookingData: [],
-        days: 1,
+        tripLength: 0,
+
       }
       this.getData = this.getData.bind(this);
 
@@ -37,32 +38,37 @@ class BookingModule extends (React.Component) {
                 reconverted.forEach((date) => {
                     availability.push(moment().dayOfYear(date));
                 })
-                this.setState({bookingData: res.data, blockedDates: availability})
+                var serviceFee = (res.data[0].price * 0.02).toFixed(0);
+                var taxes = (res.data[0].price * 0.015).toFixed(0);
+                this.setState({bookingData: res.data[0], blockedDates: availability, serviceFee, taxes})
                 //console.log(res.data)
             })
             .catch(err => console.error('error on this ID', err))
     }
 
     componentDidMount() {
-        console.log('did mount')
         this.getData()
-        
     }
 
     render() {
         const isDayBlocked = day => this.state.blockedDates.filter((d) => d.isSame(day, 'day')).length > 0;
-        if (this.state.bookingData.length > 0) {
+        if (this.state.bookingData) {
             return (
   <div className = "app">
-    <header className = "Nav">${this.state.bookingData[0].availability[0].price} per night
-    <div>***** {this.state.bookingData[0].numReviews}</div>
+    <header className = "Nav">${this.state.bookingData.price} per night
+    <div>***** {this.state.bookingData.numReviews}</div>
     </header>
    <DateRangePicker
   startDate={this.state.startDate} // momentPropTypes.momentObj or null,
   startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
   endDate={this.state.endDate} // momentPropTypes.momentObj or null,
   endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-  onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+  onDatesChange={({ startDate, endDate }) => {
+      if (endDate && startDate) {
+          var tripLength = endDate.diff(startDate, 'days');
+      }
+      this.setState({ startDate, endDate, tripLength })
+    }} // PropTypes.func.isRequired,
   focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
   onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
   isDayBlocked={isDayBlocked}
@@ -70,24 +76,30 @@ class BookingModule extends (React.Component) {
 <br></br>
 <div>
 <table>
-<tr>
-        <td> { (this.state.days)} day(s) at ${this.state.bookingData[0].availability[0].price} per night</td>
-        <td>${this.state.bookingData[0].availability[0].price * this.state.days}</td>
+    <tbody>
+    <tr>
+        <td>${this.state.bookingData.price} x {this.state.tripLength} night{this.state.tripLength !== 1? 's' : ''}</td>
+        <td>${this.state.bookingData.price * this.state.tripLength}</td>
     </tr>
     <tr>
         <td>Cleaning Fee</td>
-        <td>${this.state.bookingData[0].cleaningFee}</td>
+        <td>${this.state.bookingData.cleaningFee || this.state.bookingData.cleaningfee}</td>
     </tr>
     <tr>
         <td>Service Fee</td>
-        <td>${(this.state.bookingData[0].availability[0].price * 0.1).toFixed(0)}</td>
+        <td>${this.state.serviceFee}</td>
     </tr>
     <tr>
-        <td>Total</td>
-        <td>${(this.state.bookingData[0].availability[0].price * 1.1).toFixed(0)}</td>
+        <td>Occupancy taxes and fees</td>
+        <td>${this.state.taxes}</td>
     </tr>
+    <tr>
+        <td><strong>Total</strong></td>
+        <td><strong>${(this.state.bookingData.price * this.state.tripLength) + (this.state.bookingData.cleaningFee || this.state.bookingData.cleaningfee) + Number(this.state.taxes) + Number(this.state.serviceFee)}</strong></td>
+    </tr>
+    </tbody>
 </table>
-<button name="button">Request to Book</button>
+<button name="button">Book</button>
 <div>You won't be charged yet</div>
 
 </div>
