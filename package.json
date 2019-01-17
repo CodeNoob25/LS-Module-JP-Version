@@ -8,9 +8,11 @@
     "build": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server",
-    "startboth": "concurrently \"node ./server/index.js\" \"webpack -d --watch\"",
+    "startboth": "concurrently \"nodemon ./server/index.js\" \"webpack -d --watch\"",
     "dev-react": "webpack -d --watch",
-    "aws-connect": "chmod 400 lexifec.pem  && ssh -i \"lexifec.pem\" ubuntu@ec2-18-222-217-73.us-east-2.compute.amazonaws.com"
+    "aws-connect": "chmod 400 lexifec.pem  && ssh -i \"lexifec.pem\" ubuntu@ec2-18-222-217-73.us-east-2.compute.amazonaws.com",
+    "startboth-p": "concurrently \"node ./server/index.js\" \"webpack -p\""
+
   },
   "repository": {
     "type": "git",

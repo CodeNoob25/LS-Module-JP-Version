@@ -1,5 +1,5 @@
 var app = require('./server.js');
-var port = 3008;
+var port = process.env.PORT || 3008;
 
 app.listen(port, function () {
   console.log('BillionaireBNB DB RESTful API listening on port ' + port);

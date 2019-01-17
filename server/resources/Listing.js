@@ -18,7 +18,7 @@ var listingSchema = mongoose.Schema({
     availability: String
 }, { _id: true });
 
-var Listing = mongoose.model('listing', listingSchema);
+var listing = mongoose.model('listing', listingSchema);
 // var Availability = mongoose.model('availability', availabilitySchema);
 
-module.exports = Listing; 
+module.exports = listing; 

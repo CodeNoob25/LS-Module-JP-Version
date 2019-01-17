@@ -1,12 +1,12 @@
-var Listing = require('./Listing.js');
+var listing = require('./Listing.js');
 var axios = require('axios');
 var db = require('../db/index.js'); // mongo database
 
 // mongo function
 
-exports.retrieveBooking = function (req, res) {
+exports.retrieveBooking = (req, res) => {
     var data;
-    Listing.find({_id:req.params.id}, (err, results) => {
+    listing.find({_id:req.params.id}, (err, results) => {
         data = results;
         res.send(data);
     })
@@ -25,3 +25,23 @@ exports.retrieveBooking = function (req, res) {
 //         .then(response => res.send(response.rows))
 //         .catch(e => console.error(e.stack))
 //     };
+
+
+
+
+
+
+
+// weird austin version
+
+// exports.retrieveBooking = (req, res) => {
+//     db.connection.once('open', () => {
+//         var data;
+//         db.connection.db.collection('listing', () => {
+//             collection.find({_id:req.params.id}, (err, results) => {
+//                 data = results;
+//                 res.send(data);
+//             })
+//         })
+//     })
+// };
