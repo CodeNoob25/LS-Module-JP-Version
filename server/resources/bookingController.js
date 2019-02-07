@@ -1,8 +1,6 @@
 var listing = require('./Listing.js');
 var axios = require('axios');
-var db = require('../db/index.js'); // mongo database
-
-// mongo function
+var db = require('../db/index.js');
 
 exports.retrieveBooking = (req, res) => {
     var data;
@@ -12,8 +10,9 @@ exports.retrieveBooking = (req, res) => {
     })
 };
 
-// var client = require('../../newVersion/sqldb/index.js')
+// version for Postgres testing
 
+// var client = require('../../newVersion/sqldb/index.js')
 
 // exports.retrieveBooking = (req, res) => {
 //     var query = {
@@ -25,23 +24,3 @@ exports.retrieveBooking = (req, res) => {
 //         .then(response => res.send(response.rows))
 //         .catch(e => console.error(e.stack))
 //     };
-
-
-
-
-
-
-
-// weird austin version
-
-// exports.retrieveBooking = (req, res) => {
-//     db.connection.once('open', () => {
-//         var data;
-//         db.connection.db.collection('listing', () => {
-//             collection.find({_id:req.params.id}, (err, results) => {
-//                 data = results;
-//                 res.send(data);
-//             })
-//         })
-//     })
-// };
