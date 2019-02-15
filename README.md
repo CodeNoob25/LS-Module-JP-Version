@@ -4,6 +4,7 @@ In this project, I used a legacy code base for an AirBnB component which I modif
 I restructured the database to decrease unnecessary complexity, and modified the React code to use the next database schemas.
 I also tested my new version's upload time against a version with Postgres and found that Mongo was faster.
 
+I also have a version of this code that uses docker-compose.
 
 
 Justin's notes for deployment setup:

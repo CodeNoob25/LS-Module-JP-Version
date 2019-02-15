@@ -1,9 +1,26 @@
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
 
-var mongoUri = process.env.MONGO_URI || 'mongodb://localhost/listings';
+// var mongoIP = process.env.MONGO_URI || 'localhost';
 
-var db = mongoose.connect(mongoUri, { useNewUrlParser: true } );
+// var mongoUri = `mongodb://${mongoIP}/listings`;
 
-db.connection = mongoose.connection;
+// var db = mongoose.connect(mongoUri, { useNewUrlParser: true } );
 
-module.exports = db;
+// db.connection = mongoose.connection;
+
+// module.exports = db;
+
+// var MongoClient = require('mongodb').MongoClient;
+
+// var mongoIP = process.env.MONGO_URI || 'localhost';
+// var mongoUri = `mongodb://${mongoIP}/listings`;
+
+// MongoClient.connect(mongoUri, { useNewUrlParser: true }, (err, db) => {
+//   if (err) {
+//       throw err;
+//   }
+//   var dbo = db.db('listings');
+//   console.log(dbo)
+//   module.exports = dbo;
+// });
+

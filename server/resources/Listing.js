@@ -1,18 +1,17 @@
 var mongoose = require('mongoose');
+var db = require('../db/index.js');
 
 var listingSchema = mongoose.Schema({
     _id: Number,
-    id: Number,
     name: String,
     capacity: Number,
-    cleaningFee: Number, 
+    cleaningFee: Number,
     numReviews: Number,
     price: Number,
     availability: String
 }, { _id: true });
 
 var listing = mongoose.model('listing', listingSchema);
-
 
 module.exports = listing; 
 

@@ -38,7 +38,6 @@ var csvWriter = createCsvWriter({
     path: './records.csv',
     header: [
         {id: '_id', title: '_id'},
-        {id: 'id', title: 'id'},
         {id: 'name', title: 'name'},
         {id: 'capacity', title: 'capacity'},
         {id: 'cleaningFee', title: 'cleaningFee'},
@@ -55,7 +54,6 @@ var insertAllData = (total, part) => {
         var dataArray = [];
         for (var i = 0; i < batchsize; i++) {
             var newListing = {};
-            newListing.id = i + count;
             newListing._id = i + count;
             var index1 = Math.floor(Math.random() * 100);
             var index2 = Math.floor(Math.random() * 100);
@@ -94,7 +92,9 @@ var insertAllData = (total, part) => {
     adder(part);
 }
 
-insertAllData(10000000, 100000);
+// first number is total records to insert and the second number is the batchsize
+
+insertAllData(1000, 100);
 
 // the command below will insert all created records into the database
 

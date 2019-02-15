@@ -1,13 +1,24 @@
-var listing = require('./Listing.js');
-var axios = require('axios');
-var db = require('../db/index.js');
+var MongoClient = require('mongodb').MongoClient;
+var mongoIP = process.env.MONGO_URI || 'localhost';
+var mongoUri = `mongodb://${mongoIP}/listings`;
+
+// Eliminated mongoose
 
 exports.retrieveBooking = (req, res) => {
-    var data;
-    listing.find({_id:req.params.id}, (err, results) => {
-        data = results;
-        res.send(data);
-    })
+    MongoClient.connect(mongoUri, { useNewUrlParser: true }, (err, db) => {
+        if (err) {
+            throw err;
+        }
+    var dbo = db.db('listings');
+    var num = Number(req.params.id);
+    var query = {_id:num};
+    dbo.collection('listing').find(query).toArray((err, result) => {
+        if (err) {
+            throw err;
+        }
+        res.send(result);
+      });
+    });
 };
 
 // version for Postgres testing

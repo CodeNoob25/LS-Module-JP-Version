@@ -132,4 +132,8 @@ class BookingModule extends React.Component {
   }
 }
 
-window.BookingModule = BookingModule;
+ReactDOM.render(
+  React.createElement(BookingModule),
+  document.getElementById('applex')
+);
+
