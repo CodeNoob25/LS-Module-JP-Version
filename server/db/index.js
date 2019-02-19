@@ -20,7 +20,6 @@
 //       throw err;
 //   }
 //   var dbo = db.db('listings');
-//   console.log(dbo)
 //   module.exports = dbo;
 // });
 

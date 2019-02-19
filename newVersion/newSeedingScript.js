@@ -94,7 +94,7 @@ var insertAllData = (total, part) => {
 
 // first number is total records to insert and the second number is the batchsize
 
-insertAllData(1000, 100);
+insertAllData(1000000, 10000);
 
 // the command below will insert all created records into the database
 
