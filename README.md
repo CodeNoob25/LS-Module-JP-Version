@@ -16,6 +16,9 @@ For configuring the deployed mongo database on a regular EC2:
 4. node ./newVersion/newSeedingScript.js
 5. npm run upload-csv
 6. sudo mkdir -p /data/db
+7. sudo ps aux | grep -i mongod (to find process id of the intial mongod process)
+8. sudo mongod --bind_ip_all --fork --logpath /var/log/mongod.log (to run in the background)
+9. (allow proper access with launch wizard)
 
 For configuring the deployed server on a regular EC2:
 1. sudo apt-get update / curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - / sudo apt-get install -y nodejs /  sudo apt-get install git
